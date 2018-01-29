@@ -1,0 +1,23 @@
+{
+  "name": "electron.calulator",
+  "version": "1.0.0",
+  "description": "a calculator",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test ... not yet\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LameLoura/Electron.calculator.git"
+  },
+  "author": "nutthapong.chulden",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LameLoura/Electron.calculator/issues"
+  },
+  "homepage": "https://github.com/LameLoura/Electron.calculator#readme",
+  "devDependencies": {
+    "electron": "^1.7.11"
+  }
+}
