@@ -7,19 +7,21 @@
   </head>
   <body>
     <h1>Hello World!  </h1>
-    A:  <input type="text" name="FirstName" value=""><br>
-    B:  <input type="text" name="FirstName" value=""><br><br>
+    A:  <input type="text" id="paramA" value=""><br>
+    B:  <input type="text" id="paramB" value=""><br><br>
    
-    <input type="button" id="opPlus" value="+"  />
+    <input type="button" id="opPlus" value="+" />
     <input type="button" id="opMinus" value="-"  />
     <input type="button" id="opMultiple" value="*"  />
     <input type="button" id="opSlash" value="/"  />
     <input type="button" id="opPower" value="^" />
 
-  </body>
+    <br><br>
+    Result : <input type="text" id="result" value="" readonly>
+
+  </body> 
 
   <script>
-    require('../../src/math.js');
     require('../../src/renderer/calculator.js');
   </script>
 
