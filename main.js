@@ -1,3 +1,6 @@
+console.log("starting application...");
+
+
 const electron = require("electron");
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
