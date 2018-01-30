@@ -15,11 +15,13 @@ plusBtn.addEventListener('click',       function () { onChooseOperation( plusBtn
 minusBtn.addEventListener('click',      function () { onChooseOperation( minusBtn ); }, false);
 multipleBtn.addEventListener('click',   function () { onChooseOperation( multipleBtn ); }, false);
 divideBtn.addEventListener('click',     function () { onChooseOperation( divideBtn ); }, false);
-powerBtn.addEventListener('click',     function () { onChooseOperation( powerBtn ); }, false);
+powerBtn.addEventListener('click',      function () { onChooseOperation( powerBtn ); }, false);
 
 // //bind event for parameters
 paramA.addEventListener("keypress", onParameterChanged, false);
 paramB.addEventListener("keypress", onParameterChanged, false);
+paramA.addEventListener("keyup", function () { calculate(); }, false);
+paramB.addEventListener("keyup", function () { calculate(); }, false);
 //TODO aim for a purer funcion ?
 function onParameterChanged(e){
     //prevent key press that is not number
