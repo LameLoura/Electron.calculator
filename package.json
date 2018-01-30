@@ -2,7 +2,7 @@
   "name": "electron.calulator",
   "version": "1.0.0",
   "description": "a calculator",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test ... not yet\" && exit 1"
