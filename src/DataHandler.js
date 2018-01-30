@@ -6,12 +6,17 @@ var appDir = path.dirname(require.main.filename) + "/../../" + config.dataFile;
 
 exports.loadData = function( callback ) {
    
+    let JsonData;
+
     fs.readFile( appDir  , (err, data) => {
         if (err) {
             console.log('Could not find data to load...' + err );
-            return;
+            JsonData = getEmptyData();
         }
-        let JsonData = JSON.parse(data);
+        else {
+            JsonData = JSON.parse(data);
+        }
+        
         //callback the function with json data
         callback ( JsonData );
     });
@@ -28,4 +33,13 @@ exports.saveData = function( JsonData ) {
         }
         console.log('Data saved successfully');
     });
+}
+
+function getEmptyData() {
+    return {
+        paramA: '',
+        paramB: '',
+        operator: '',
+        result: ''
+    };
 }
