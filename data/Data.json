@@ -1,7 +1,6 @@
 {
-  "dataFile": "../data/userData.json",
-  "dataFile2": "../data/userData.json",
-  "dataFile3": "../data/userData.json",
-  "dataFile4": "../data/userData.json",
-  "times": 7
+  "paramA": "",
+  "paramB": "",
+  "operator": "",
+  "result": ""
 }

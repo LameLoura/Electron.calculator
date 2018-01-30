@@ -3,21 +3,19 @@ const fs = require('fs');
 const path = require('path');
 
 var appDir = path.dirname(require.main.filename) + "/../../" + config.dataFile;
-loadData();
 
-function loadData() {
-
+exports.loadData = function( callback ) {
+   
     fs.readFile( appDir  , (err, data) => {
-
         if (err) {
             console.log('Could not find data to load...' + err );
             return;
         }
-
         let JsonData = JSON.parse(data);
-        saveData( JsonData );
+        //callback the function with json data
+        callback ( JsonData );
     });
-}
+  };
 
 function saveData( JsonData ) {
 
