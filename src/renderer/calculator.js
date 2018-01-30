@@ -23,6 +23,7 @@ divideBtn.addEventListener('click',     function () { onChooseOperation( divideB
 powerBtn.addEventListener('click',      function () { onChooseOperation( powerBtn ); }, false);
 
 btnLoad.addEventListener('click', function () { loadData(); }, false);
+btnSave.addEventListener('click', function () { saveData(); }, false);
 
 // //bind event for parameters
 paramA.addEventListener("keypress", onParameterChanged, false);
@@ -58,6 +59,16 @@ function onChooseOperation( button ) {
             operations[i].removeAttribute( "class" );
         }
     }
+  }
+
+  function saveData() {
+    var dataJson = {
+        paramA: paramA.value,
+        paramB: paramB.value,
+        operator: getActiveOperation(),
+        result: result.value
+    };
+    dataHandler.saveData( dataJson );
   }
 
   function loadData() {

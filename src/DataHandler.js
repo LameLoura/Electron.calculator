@@ -17,10 +17,8 @@ exports.loadData = function( callback ) {
     });
   };
 
-function saveData( JsonData ) {
-
-    JsonData.times = eval( JsonData.times ) + 1;
-
+exports.saveData = function( JsonData ) {
+    
     let data = JSON.stringify(JsonData, null, 2);
 
     fs.writeFile( appDir , data, (err) => {  
