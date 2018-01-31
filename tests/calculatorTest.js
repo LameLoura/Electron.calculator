@@ -74,5 +74,63 @@ describe('Application launch', function () {
                 });
       });
 
+    it ('test plus operation', function() {
+        return this.app.client
+            .waitUntilWindowLoaded()
+            .setValue('#paramA', '2000')
+            .setValue('#paramB', '3000')
+            .click('#opPlus' )
+            .getValue( '#result' )
+            .then( function ( value ) {
+                assert.equal(value,  2000 + 3000 )
+            ;})
+    });
 
+    it ('test minus operation', function() {
+        return this.app.client
+            .waitUntilWindowLoaded()
+            .setValue('#paramA', '2000')
+            .setValue('#paramB', '3000')
+            .click('#opMinus' )
+            .getValue( '#result' )
+            .then( function ( value ) {
+                assert.equal(value,  2000 - 3000 )
+            ;})
+    });
+
+    it ('test multiply operation', function() {
+        return this.app.client
+            .waitUntilWindowLoaded()
+            .setValue('#paramA', '2000')
+            .setValue('#paramB', '3000')
+            .click('#opMultiple' )
+            .getValue( '#result' )
+            .then( function ( value ) {
+                assert.equal(value,  2000 * 3000 )
+            ;})
+    });
+
+    it ('test divide operation', function() {
+        return this.app.client
+            .waitUntilWindowLoaded()
+            .setValue('#paramA', '2000')
+            .setValue('#paramB', '3000')
+            .click('#opSlash' )
+            .getValue( '#result' )
+            .then( function ( value ) {
+                assert.equal(value,  2000 / 3000 )
+            ;})
+    });
+
+    it ('test power operation', function() {
+        return this.app.client
+            .waitUntilWindowLoaded()
+            .setValue('#paramA', '2000')
+            .setValue('#paramB', '3000')
+            .click('#opPower' )
+            .getValue( '#result' )
+            .then( function ( value ) {
+                assert.equal(value,  Math.pow( 2000, 3000 ) )
+            ;})
+    });
 })
