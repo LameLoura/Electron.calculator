@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "mocha tests/*.js"
+    "test": "xvfb-maybe mocha tests/*.js"
   },
   "repository": {
     "type": "git",
