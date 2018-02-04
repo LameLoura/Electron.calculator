@@ -85,22 +85,28 @@ function onChooseOperation( button ) {
   }
 
   function saveData() {
+    
+    let userName = cloudUser || 'localUser';
+    let iProfileHandler = cloudUser == null ? dataHandler : cloudHandler;
+
     var dataJson = {
+        userName: userName,
         paramA: paramA.value,
         paramB: paramB.value,
         operator: getActiveOperation(),
         result: result.value
     };
-    dataHandler.saveData( cloudUser, dataJson );
+        
+    iProfileHandler.saveData( userName, dataJson );
   }
 
   function loadData() {
 
     //use hard-coded local user for now as local loader doesn't support multiple user
     let userName = cloudUser || 'localUser';
-    let iLoader = cloudUser == null ? dataHandler : cloudHandler;
+    let iProfileHandler = cloudUser == null ? dataHandler : cloudHandler;
     
-    iLoader.loadData( userName, ( loadedData) => {
+    iProfileHandler.loadData( userName, ( loadedData) => {
         console.log( loadedData );
         paramA.value = loadedData.paramA;
         paramB.value = loadedData.paramB;
@@ -151,7 +157,7 @@ function onChooseOperation( button ) {
   }
 
   function getActiveOperation() {
-    var selectedOperation = null;
+    var selectedOperation = '';
     for (var i = 0; i < operations.length; i++) {
         var btnClass = operations[i].getAttribute( "class" );
         if( btnClass == "selected" ) {
