@@ -2,6 +2,12 @@ console.log('loading calculator renderer...');
 
 
 const dataHandler = require('../DataHandler.js');
+const cloudHandler = require('../CloudHandler.js');
+var {ipcRenderer} = require('electron');
+
+//cloudUser the user name for cloud drive
+let cloudUser = null;
+let cloudUserPrefix = 'CloudUser: ';
 
 //get all controls
 var plusBtn = document.querySelector('#opPlus');
@@ -14,13 +20,15 @@ var paramB = document.querySelector('#paramB');
 var result = document.querySelector('#result');
 var btnLoad = document.querySelector('#btnLoad');
 var btnSave = document.querySelector('#btnSave');
+var btnCloud = document.querySelector('#btnCloud');
 
 //add event for operations
-plusBtn.addEventListener('click',       function () { onChooseOperation( plusBtn ); }, false);
+plusBtn.addEventListener('click',       function (btnCloud) { onChooseOperation( plusBtn ); }, false);
 minusBtn.addEventListener('click',      function () { onChooseOperation( minusBtn ); }, false);
 multipleBtn.addEventListener('click',   function () { onChooseOperation( multipleBtn ); }, false);
 divideBtn.addEventListener('click',     function () { onChooseOperation( divideBtn ); }, false);
 powerBtn.addEventListener('click',      function () { onChooseOperation( powerBtn ); }, false);
+btnCloud.addEventListener('click',      function () { openCloudChooser(); } );
 
 btnLoad.addEventListener('click', function () { loadData(); }, false);
 btnSave.addEventListener('click', function () { saveData(); }, false);
@@ -46,6 +54,21 @@ function onChooseOperation( button ) {
     calculate();
   }
 
+  function openCloudChooser() { 
+    ipcRenderer.send('chooseCloud' );
+  }
+
+  ipcRenderer.on('onCloudUserChosen' , function(event , chosenUser){
+        if (chosenUser) {
+            //do something
+            cloudUser = chosenUser; 
+            btnCloud.value = cloudUserPrefix + chosenUser;
+        } else {
+            cloudUser = null; 
+            btnCloud.value = cloudUserPrefix + "none";
+        }
+    });
+
   function highlightOperation( selectedOperation ) {
 
     //clear all button state - except it is the one being highlighted
@@ -62,17 +85,29 @@ function onChooseOperation( button ) {
   }
 
   function saveData() {
+    
+    let userName = cloudUser || 'localUser';
+    let iProfileHandler = cloudUser == null ? dataHandler : cloudHandler;
+
     var dataJson = {
+        userName: userName,
         paramA: paramA.value,
         paramB: paramB.value,
         operator: getActiveOperation(),
         result: result.value
     };
-    dataHandler.saveData( dataJson );
+        
+    iProfileHandler.saveData( userName, dataJson );
   }
 
   function loadData() {
-    dataHandler.loadData( ( loadedData ) => {
+
+    //use hard-coded local user for now as local loader doesn't support multiple user
+    let userName = cloudUser || 'localUser';
+    let iProfileHandler = cloudUser == null ? dataHandler : cloudHandler;
+    
+    iProfileHandler.loadData( userName, ( loadedData) => {
+        console.log( loadedData );
         paramA.value = loadedData.paramA;
         paramB.value = loadedData.paramB;
         result.value = loadedData.result;
@@ -122,7 +157,7 @@ function onChooseOperation( button ) {
   }
 
   function getActiveOperation() {
-    var selectedOperation = null;
+    var selectedOperation = '';
     for (var i = 0; i < operations.length; i++) {
         var btnClass = operations[i].getAttribute( "class" );
         if( btnClass == "selected" ) {

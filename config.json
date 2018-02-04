@@ -1,3 +1,4 @@
 {
-  "dataFile": "/data/Data.json"
+  "dataFile": "/data/Data.json",
+  "CloudWebAPI": "calculatorrestapi-dev.ap-southeast-1.elasticbeanstalk.com"
 }
