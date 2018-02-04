@@ -2,6 +2,9 @@ console.log('loading calculator renderer...');
 
 
 const dataHandler = require('../DataHandler.js');
+var {ipcRenderer} = require('electron');
+let cloudUser = '';
+let cloudUserPrefix = 'CloudUser: ';
 
 //get all controls
 var plusBtn = document.querySelector('#opPlus');
@@ -14,13 +17,15 @@ var paramB = document.querySelector('#paramB');
 var result = document.querySelector('#result');
 var btnLoad = document.querySelector('#btnLoad');
 var btnSave = document.querySelector('#btnSave');
+var btnCloud = document.querySelector('#btnCloud');
 
 //add event for operations
-plusBtn.addEventListener('click',       function () { onChooseOperation( plusBtn ); }, false);
+plusBtn.addEventListener('click',       function (btnCloud) { onChooseOperation( plusBtn ); }, false);
 minusBtn.addEventListener('click',      function () { onChooseOperation( minusBtn ); }, false);
 multipleBtn.addEventListener('click',   function () { onChooseOperation( multipleBtn ); }, false);
 divideBtn.addEventListener('click',     function () { onChooseOperation( divideBtn ); }, false);
 powerBtn.addEventListener('click',      function () { onChooseOperation( powerBtn ); }, false);
+btnCloud.addEventListener('click',      function () { openCloudChooser(); } );
 
 btnLoad.addEventListener('click', function () { loadData(); }, false);
 btnSave.addEventListener('click', function () { saveData(); }, false);
@@ -45,6 +50,21 @@ function onChooseOperation( button ) {
     highlightOperation( button.value );
     calculate();
   }
+
+  function openCloudChooser() { 
+    ipcRenderer.send('chooseCloud' );
+  }
+
+  ipcRenderer.on('onCloudUserChosen' , function(event , chosenUser){
+        if (chosenUser) {
+            //do something
+            cloudUser = chosenUser; 
+            btnCloud.value = cloudUserPrefix + chosenUser;
+        } else {
+            cloudUser = ''; 
+            btnCloud.value = cloudUserPrefix + "none";
+        }
+    });
 
   function highlightOperation( selectedOperation ) {
 
