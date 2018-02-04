@@ -4,7 +4,7 @@ const path = require('path');
 
 var appDir = path.dirname(require.main.filename) + "/../../" + config.dataFile;
 
-exports.loadData = function( callback ) {
+exports.loadData = function( userid, callback ) {
    
     let JsonData;
 
@@ -22,7 +22,7 @@ exports.loadData = function( callback ) {
     });
   };
 
-exports.saveData = function( JsonData ) {
+exports.saveData = function( userid, JsonData ) {
     
     let data = JSON.stringify(JsonData, null, 2);
 

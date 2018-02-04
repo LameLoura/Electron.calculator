@@ -2,8 +2,11 @@ console.log('loading calculator renderer...');
 
 
 const dataHandler = require('../DataHandler.js');
+const cloudHandler = require('../CloudHandler.js');
 var {ipcRenderer} = require('electron');
-let cloudUser = '';
+
+//cloudUser the user name for cloud drive
+let cloudUser = null;
 let cloudUserPrefix = 'CloudUser: ';
 
 //get all controls
@@ -61,7 +64,7 @@ function onChooseOperation( button ) {
             cloudUser = chosenUser; 
             btnCloud.value = cloudUserPrefix + chosenUser;
         } else {
-            cloudUser = ''; 
+            cloudUser = null; 
             btnCloud.value = cloudUserPrefix + "none";
         }
     });
@@ -88,11 +91,17 @@ function onChooseOperation( button ) {
         operator: getActiveOperation(),
         result: result.value
     };
-    dataHandler.saveData( dataJson );
+    dataHandler.saveData( cloudUser, dataJson );
   }
 
   function loadData() {
-    dataHandler.loadData( ( loadedData ) => {
+
+    //use hard-coded local user for now as local loader doesn't support multiple user
+    let userName = cloudUser || 'localUser';
+    let iLoader = cloudUser == null ? dataHandler : cloudHandler;
+    
+    iLoader.loadData( userName, ( loadedData) => {
+        console.log( loadedData );
         paramA.value = loadedData.paramA;
         paramB.value = loadedData.paramB;
         result.value = loadedData.result;
